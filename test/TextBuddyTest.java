@@ -53,7 +53,7 @@ public class TextBuddyTest {
         testresultsList.add(2);
         testresultsList.add(5);
         testresultsList.add(6);
-        assertEquals(testresultsList,TextBuddy.searchList(currentFileTest, searchstring, "testfileName"));
+        assertEquals(testresultsList,TextBuddy.searchList(currentFileTest, searchstring));
         
     }
     @Test
@@ -72,6 +72,6 @@ public class TextBuddyTest {
         expectedSortedTest.add("fff");
         expectedSortedTest.add("ggg");
         expectedSortedTest.add("zzz");
-        assertEquals(expectedSortedTest,TextBuddy.sortList(currentFileTest,"testfileName"));
+        assertEquals(expectedSortedTest,TextBuddy.sortList(currentFileTest));
     }
 }

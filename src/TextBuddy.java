@@ -37,19 +37,21 @@ public class TextBuddy {
     private static final String ERROR_NO_SUCH_ELEMENT = "Element not found in file";
     private static final String ERROR_INPUT_NOT_INTEGER = "Please enter in this format : delete integer";
     private static final String ERROR_NULL_INPUT = "Input cannot be null!";
+    private static final String ERROR_STRING_NOT_FOUND = "%1$s not found!";
     
     /**
      * The following shows messages that will be display after specificed operations are completed.
      */
-    private static final String COMMAND_LIST = "List of commands: 1.display 2.add (text) 3.delete (number) 4.clear 5.exit";
-    private static final String WELCOME_MESSAGE = "Welcome to TextBuddy. %1$s is ready for use";
-    private static final String ENTER_COMMAND = "Please enter a command:";
+    private static final String MESSAGE_COMMAND_LIST = "List of commands: 1.display 2.add (text) 3.delete (number) 4.clear 5.exit";
+    private static final String MESSAGE_WELCOME = "Welcome to TextBuddy. %1$s is ready for use";
+    private static final String MESSAGE_ENTER_COMMAND = "Please enter a command:";
     private static final String MESSAGE_ADDED = "added to %1$s: \"%2$s\"";
-    private static final String CONTENT_DELETED = "all content deleted from %1$s";
-    private static final String EXIT_MESSAGE = "Goodbye!";
+    private static final String MESSAGE_CONTENT_DELETED = "all content deleted from %1$s";
+    private static final String MESSAGE_STRING_FOUND = "%1$s is found in the following lines :";
+    private static final String MESSAGE_EXIT = "Goodbye!";
 
     enum COMMAND_TYPE {
-        ADD_TOFILE, DISPLAY_FILE, DELETE_FILECONTENT, CLEAR_ENTIRE_FILE, EXIT, HELP, INVALID, SEARCH
+        ADD_TOFILE, DISPLAY_FILE, DELETE_FILECONTENT, CLEAR_ENTIRE_FILE, EXIT, HELP, INVALID, SEARCH, SORT
     };
 
     public static void main(String[] args) {
@@ -64,14 +66,14 @@ public class TextBuddy {
         // Read in file and store each line in a LinkList
         readFromFile(currentFile, fileName);
         // Read in command
-        showToUser(ENTER_COMMAND);
+        showToUser(MESSAGE_ENTER_COMMAND);
         String command = sc.next();
         COMMAND_TYPE instruction = readCommand(command, sc, currentFile,
                 fileName);
         executeCommand(sc, instruction, currentFile, fileName);
         //keep waiting for commands until there is an exit command
         while (command != "exit") {
-            showToUser(ENTER_COMMAND);
+            showToUser(MESSAGE_ENTER_COMMAND);
             String commandNext = sc.next();
             COMMAND_TYPE instructionNext = readCommand(commandNext, sc,
                     currentFile, fileName);
@@ -112,7 +114,7 @@ public class TextBuddy {
                 break;
 
             case HELP:
-                showToUser(COMMAND_LIST);
+                showToUser(MESSAGE_COMMAND_LIST);
                 break;
 
             case INVALID:
@@ -120,13 +122,18 @@ public class TextBuddy {
                 break;
 
             case EXIT:
-                showToUser(EXIT_MESSAGE);
+                showToUser(MESSAGE_EXIT);
                 System.exit(0);
                 break;
             
             case SEARCH:
                 searchString = sc.nextLine().trim();
-                searchList(currentFile, searchString, fileName);
+                searchList(currentFile, searchString);
+                break;
+            case SORT:
+                sortList(currentFile);
+                writeToFile(currentFile, fileName);
+                displayFile(currentFile, fileName);
                 break;
 
             default:
@@ -159,7 +166,9 @@ public class TextBuddy {
         } else if (command.equalsIgnoreCase("exit")) {
             return COMMAND_TYPE.EXIT;
         } else if (command.equalsIgnoreCase("search")) {
-            return COMMAND_TYPE.SEARCH;    
+            return COMMAND_TYPE.SEARCH;
+        } else if (command.equalsIgnoreCase("sort")) {
+            return COMMAND_TYPE.SORT;    
         } else {
             return COMMAND_TYPE.INVALID;
 
@@ -175,7 +184,7 @@ public class TextBuddy {
 
         else {
             fileName = args[0];
-            showToUser(String.format(WELCOME_MESSAGE, fileName));
+            showToUser(String.format(MESSAGE_WELCOME, fileName));
 
         }
         return fileName;
@@ -248,7 +257,7 @@ public class TextBuddy {
             bw.write(content);
             bw.close();
             currentFile.clear();
-            showToUser(String.format(CONTENT_DELETED, fileName));
+            showToUser(String.format(MESSAGE_CONTENT_DELETED, fileName));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -275,7 +284,7 @@ public class TextBuddy {
         } else
             showToUser(ERROR_NO_SUCH_ELEMENT);
     }
-    public static ArrayList<Integer> searchList(LinkedList<String> currentFile, String searchString,String filename) {
+    public static ArrayList<Integer> searchList(LinkedList<String> currentFile, String searchString) {
         Iterator<String> li = currentFile.iterator();
         int counter = 1;
         ArrayList<Integer> resultsList = new ArrayList<Integer>();
@@ -286,15 +295,15 @@ public class TextBuddy {
             counter++;
         }
         if(resultsList.size()==0) {
-        showToUser("String not found!");
+        showToUser(String.format(ERROR_STRING_NOT_FOUND, searchString));
         }
         else {
-            showToUser("String found in the following lines :");
+            showToUser(String.format(MESSAGE_STRING_FOUND, searchString));
             System.out.println(resultsList);
         }
         return resultsList;
     }
-    public static LinkedList<String> sortList(LinkedList<String> currentFile,String filename) {
+    public static LinkedList<String> sortList(LinkedList<String> currentFile) {
         Collections.sort(currentFile);
         return currentFile;
     }
