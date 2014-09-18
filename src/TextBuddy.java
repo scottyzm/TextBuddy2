@@ -264,5 +264,7 @@ public class TextBuddy {
         } else
             showToUser(ERROR_NO_SUCH_ELEMENT);
     }
-
+    public static void searchList(LinkedList<String> currentFile, String inputText,String filename) {
+        
+    }
 }

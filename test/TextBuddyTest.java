@@ -38,4 +38,8 @@ public class TextBuddyTest {
         assertEquals(0,currentFileTest.size());
         
     }
+    @Test
+    public void testsearchList() {
+        
+    }
 }
