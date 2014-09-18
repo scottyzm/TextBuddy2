@@ -293,4 +293,7 @@ public class TextBuddy {
         }
         return resultsList;
     }
-}
+    public static LinkedList<String> sortList(LinkedList<String> currentFile,String filename) {
+        return currentFile;
+    }
+    }
