@@ -42,7 +42,8 @@ public class TextBuddy {
     /**
      * The following shows messages that will be display after specificed operations are completed.
      */
-    private static final String MESSAGE_COMMAND_LIST = "List of commands: 1.display 2.add (text) 3.delete (number) 4.clear 5.exit";
+    private static final String MESSAGE_COMMAND_LIST = "List of commands: 1.display 2.add (text) "
+                                     + "3.delete (number) 4.clear 5. search (text) 6.sort 7.exit";
     private static final String MESSAGE_WELCOME = "Welcome to TextBuddy. %1$s is ready for use";
     private static final String MESSAGE_ENTER_COMMAND = "Please enter a command:";
     private static final String MESSAGE_ADDED = "added to %1$s: \"%2$s\"";
@@ -51,7 +52,7 @@ public class TextBuddy {
     private static final String MESSAGE_EXIT = "Goodbye!";
 
     enum COMMAND_TYPE {
-        ADD_TOFILE, DISPLAY_FILE, DELETE_FILECONTENT, CLEAR_ENTIRE_FILE, EXIT, HELP, INVALID, SEARCH, SORT
+        ADD, DISPLAY, DELETE, CLEAR, EXIT, HELP, INVALID, SEARCH, SORT
     };
 
     public static void main(String[] args) {
@@ -91,16 +92,16 @@ public class TextBuddy {
         String inputText = "";
         String searchString = "";
         switch (instruction) {
-            case DISPLAY_FILE:
+            case DISPLAY:
                 displayFile(currentFile, fileName);
                 break;
 
-            case ADD_TOFILE:
+            case ADD:
                 inputText = sc.nextLine().trim();
                 addToList(currentFile, inputText, fileName);
                 break;
 
-            case DELETE_FILECONTENT:
+            case DELETE:
                 try {
                     int delElement = sc.nextInt();
                     deleteElementFromList(currentFile, delElement, fileName);
@@ -109,7 +110,7 @@ public class TextBuddy {
                 }
                 break;
 
-            case CLEAR_ENTIRE_FILE:
+            case CLEAR:
                 clearAll(currentFile, fileName);
                 break;
 
@@ -150,16 +151,16 @@ public class TextBuddy {
             throw new Error(ERROR_NULL_INPUT);
         }
         if (command.equalsIgnoreCase("display")) {
-            return COMMAND_TYPE.DISPLAY_FILE;
+            return COMMAND_TYPE.DISPLAY;
 
         } else if (command.equalsIgnoreCase("add")) {
-            return COMMAND_TYPE.ADD_TOFILE;
+            return COMMAND_TYPE.ADD;
 
         } else if (command.equalsIgnoreCase("delete")) {
-            return COMMAND_TYPE.DELETE_FILECONTENT;
+            return COMMAND_TYPE.DELETE;
 
         } else if (command.equalsIgnoreCase("clear")) {
-            return COMMAND_TYPE.CLEAR_ENTIRE_FILE;
+            return COMMAND_TYPE.CLEAR;
 
         } else if (command.equalsIgnoreCase("help")) {
             return COMMAND_TYPE.HELP;
@@ -175,6 +176,7 @@ public class TextBuddy {
         }
 
     }
+    
     // Performs a startup check to ensure there is an argument during the program runtime
     private static String checkParameter(String[] args, String fileName) {
         if (args.length == 0) {
@@ -206,6 +208,7 @@ public class TextBuddy {
             count++;
         }
     }
+    
     // opens the textfile and read it line by line, storing each line in a linkedlist
     private static void readFromFile(LinkedList<String> currentFile,
             String fileName) {
@@ -226,6 +229,7 @@ public class TextBuddy {
 
         }
     }
+    
     //Copies all content in the linkedlist and write to the textfile
     private static void writeToFile(LinkedList<String> currentFile,
             String fileName) {
@@ -246,6 +250,7 @@ public class TextBuddy {
         }
 
     }
+    
     //Remove all contents from the file
     public static void clearAll(LinkedList<String> currentFile, String fileName) {
         try {
@@ -284,6 +289,8 @@ public class TextBuddy {
         } else
             showToUser(ERROR_NO_SUCH_ELEMENT);
     }
+    
+    //Search for input string in the entire linkedlist
     public static ArrayList<Integer> searchList(LinkedList<String> currentFile, String searchString) {
         Iterator<String> li = currentFile.iterator();
         int counter = 1;
@@ -303,6 +310,10 @@ public class TextBuddy {
         }
         return resultsList;
     }
+    
+    /*Sort the linkedlist in alphabetical order. Items starting with digits will be
+      before items starting with alphabets.
+    */
     public static LinkedList<String> sortList(LinkedList<String> currentFile) {
         Collections.sort(currentFile);
         return currentFile;
