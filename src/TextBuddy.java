@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
 import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 /**
  * Textbuddy v1.3 
@@ -46,7 +48,7 @@ public class TextBuddy {
     private static final String EXIT_MESSAGE = "Goodbye!";
 
     enum COMMAND_TYPE {
-        ADD_TOFILE, DISPLAY_FILE, DELETE_FILECONTENT, CLEAR_ENTIRE_FILE, EXIT, HELP, INVALID
+        ADD_TOFILE, DISPLAY_FILE, DELETE_FILECONTENT, CLEAR_ENTIRE_FILE, EXIT, HELP, INVALID, SEARCH
     };
 
     public static void main(String[] args) {
@@ -149,6 +151,8 @@ public class TextBuddy {
             return COMMAND_TYPE.HELP;
         } else if (command.equalsIgnoreCase("exit")) {
             return COMMAND_TYPE.EXIT;
+        } else if (command.equalsIgnoreCase("search")) {
+            return COMMAND_TYPE.SEARCH;    
         } else {
             return COMMAND_TYPE.INVALID;
 
@@ -264,7 +268,17 @@ public class TextBuddy {
         } else
             showToUser(ERROR_NO_SUCH_ELEMENT);
     }
-    public static void searchList(LinkedList<String> currentFile, String inputText,String filename) {
-        
+    public static ArrayList searchList(LinkedList<String> currentFile, String searchString,String filename) {
+        Iterator<String> li = currentFile.iterator();
+        int counter = 1;
+        ArrayList<Integer> resultsList = new ArrayList<Integer>();
+        while (li.hasNext()) {
+            if (li.next().contains(searchString)) {
+                resultsList.add(counter);
+            } 
+            counter++;
+        }
+        System.out.println(resultsList);
+        return resultsList;
     }
 }
