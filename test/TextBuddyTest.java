@@ -54,6 +54,6 @@ public class TextBuddyTest {
         testresultsList.add(5);
         testresultsList.add(6);
         assertEquals(testresultsList,TextBuddy.searchList(currentFileTest, searchstring, "testfileName"));
-        System.out.println("testing search"+currentFileTest);
+        
     }
 }

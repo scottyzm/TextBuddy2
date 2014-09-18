@@ -86,6 +86,7 @@ public class TextBuddy {
     private static void executeCommand(Scanner sc, COMMAND_TYPE instruction,
             LinkedList<String> currentFile, String fileName) {
         String inputText = "";
+        String searchString = "";
         switch (instruction) {
             case DISPLAY_FILE:
                 displayFile(currentFile, fileName);
@@ -120,6 +121,11 @@ public class TextBuddy {
             case EXIT:
                 showToUser(EXIT_MESSAGE);
                 System.exit(0);
+                break;
+            
+            case SEARCH:
+                searchString = sc.nextLine().trim();
+                searchList(currentFile, searchString, fileName);
                 break;
 
             default:
@@ -268,7 +274,7 @@ public class TextBuddy {
         } else
             showToUser(ERROR_NO_SUCH_ELEMENT);
     }
-    public static ArrayList searchList(LinkedList<String> currentFile, String searchString,String filename) {
+    public static ArrayList<Integer> searchList(LinkedList<String> currentFile, String searchString,String filename) {
         Iterator<String> li = currentFile.iterator();
         int counter = 1;
         ArrayList<Integer> resultsList = new ArrayList<Integer>();
@@ -278,7 +284,13 @@ public class TextBuddy {
             } 
             counter++;
         }
-        System.out.println(resultsList);
+        if(resultsList.size()==0) {
+        showToUser("String not found!");
+        }
+        else {
+            showToUser("String found in the following lines :");
+            System.out.println(resultsList);
+        }
         return resultsList;
     }
 }
