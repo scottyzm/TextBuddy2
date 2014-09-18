@@ -66,12 +66,12 @@ public class TextBuddyTest {
         currentFileTest.add("123");
         currentFileTest.add("aaa");
         LinkedList<String> expectedSortedTest = new LinkedList<String>();
-        currentFileTest.add("aaa");
-        currentFileTest.add("ccc");
-        currentFileTest.add("fff");
-        currentFileTest.add("ggg");
-        currentFileTest.add("zzz");
-        currentFileTest.add("123");
+        expectedSortedTest.add("123");
+        expectedSortedTest.add("aaa");
+        expectedSortedTest.add("ccc");
+        expectedSortedTest.add("fff");
+        expectedSortedTest.add("ggg");
+        expectedSortedTest.add("zzz");
         assertEquals(expectedSortedTest,TextBuddy.sortList(currentFileTest,"testfileName"));
     }
 }

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.LinkedList;
@@ -294,6 +295,7 @@ public class TextBuddy {
         return resultsList;
     }
     public static LinkedList<String> sortList(LinkedList<String> currentFile,String filename) {
+        Collections.sort(currentFile);
         return currentFile;
     }
     }
