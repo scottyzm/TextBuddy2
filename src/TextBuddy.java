@@ -62,10 +62,13 @@ public class TextBuddy {
         LinkedList<String> currentFile = new LinkedList<String>();
 
         String fileName = "";
+        
         // Check if filename is specified.Prints Welcome message
         fileName = checkParameter(args, fileName);
+        
         // Read in file and store each line in a LinkList
         readFromFile(currentFile, fileName);
+        
         // Read in command
         showToUser(MESSAGE_ENTER_COMMAND);
         String command = sc.next();
@@ -75,8 +78,8 @@ public class TextBuddy {
         //keep waiting for commands until there is an exit command
         while (command != "exit") {
             showToUser(MESSAGE_ENTER_COMMAND);
-            String commandNext = sc.next();
-            COMMAND_TYPE instructionNext = readCommand(commandNext, sc,
+            String nextCommand = sc.next();
+            COMMAND_TYPE instructionNext = readCommand(nextCommand, sc,
                     currentFile, fileName);
             executeCommand(sc, instructionNext, currentFile, fileName);
         }
@@ -103,8 +106,8 @@ public class TextBuddy {
 
             case DELETE:
                 try {
-                    int delElement = sc.nextInt();
-                    deleteElementFromList(currentFile, delElement, fileName);
+                    int delElementIndex = sc.nextInt();
+                    deleteElementFromList(currentFile, delElementIndex, fileName);
                 } catch (InputMismatchException exception) {
                     showToUser(ERROR_INPUT_NOT_INTEGER);
                 }
@@ -213,8 +216,8 @@ public class TextBuddy {
     private static void readFromFile(LinkedList<String> currentFile,
             String fileName) {
         try {
-            FileReader inputFile = new FileReader(fileName);
-            BufferedReader bufferReader = new BufferedReader(inputFile);
+            FileReader fr = new FileReader(fileName);
+            BufferedReader bufferReader = new BufferedReader(fr);
             String line;
             while ((line = bufferReader.readLine()) != null) {
                 currentFile.add(line);
