@@ -32,7 +32,7 @@ public class TextBuddy {
      */
     private static final String ERROR_READING = "Error while reading file line by line:";
     private static final String ERROR_NO_FILE_NAME = "There is no filename specified!";
-    private static final String ERROR_INVALID_COMMAND = "No such command! Type help for list of availiable commands.";
+    private static final String ERROR_INVALID_COMMAND = "No such command! Type help for list of available commands.";
     private static final String ERROR_EMPTY_FILE = "%1$s is empty";
     private static final String ERROR_NO_SUCH_ELEMENT = "Element not found in file";
     private static final String ERROR_INPUT_NOT_INTEGER = "Please enter in this format : delete integer";
@@ -58,23 +58,24 @@ public class TextBuddy {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        // Linkedlist to store contents from the file
+        
         LinkedList<String> currentFile = new LinkedList<String>();
 
         String fileName = "";
         
-        // Check if filename is specified.Prints Welcome message
+        
         fileName = checkParameter(args, fileName);
         
-        // Read in file and store each line in a LinkList
+       
         readFromFile(currentFile, fileName);
         
-        // Read in command
+        
         showToUser(MESSAGE_ENTER_COMMAND);
         String command = sc.next();
         COMMAND_TYPE instruction = readCommand(command, sc, currentFile,
                 fileName);
         executeCommand(sc, instruction, currentFile, fileName);
+        
         //keep waiting for commands until there is an exit command
         while (command != "exit") {
             showToUser(MESSAGE_ENTER_COMMAND);
@@ -146,7 +147,7 @@ public class TextBuddy {
         }
 
     }
-
+    //Checks inputs and returns the correct command to execute
     private static COMMAND_TYPE readCommand(String command, Scanner sc,
             LinkedList<String> currentFile, String fileName) {
 
@@ -195,6 +196,7 @@ public class TextBuddy {
         return fileName;
     }
 
+    //Displays all the text currently stored in the list
     private static void displayFile(LinkedList<String> currentFile,
             String fileName) {
         int count = 0;
@@ -212,7 +214,7 @@ public class TextBuddy {
         }
     }
     
-    // opens the textfile and read it line by line, storing each line in a linkedlist
+    //Opens the textfile and read it line by line, storing each line in a linkedlist
     private static void readFromFile(LinkedList<String> currentFile,
             String fileName) {
         try {
